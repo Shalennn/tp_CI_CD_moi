@@ -18,7 +18,7 @@ jobs:
       run: |
         test -f index.html || (echo "Erreur: index.html manquant" && exit 1)
         test -f nginx.conf || (echo "Erreur: nginx.conf manquant" && exit 1)
-        test -f Dockerfile || (echo "Erreur: Dockerfile manquant" && exit 1)
+        test -f dockerfile || (echo "Erreur: Dockerfile manquant" && exit 1)
         echo "Tous les fichiers sont présents."
 
     # 3. Construire l'image Docker (cela teste indirectement la config Nginx)
