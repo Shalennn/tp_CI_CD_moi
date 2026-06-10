@@ -1,0 +1,30 @@
+name: Pipeline CI - Niveau 1
+
+# workflow_dispatch permet de lancer la pipeline manuellement depuis GitHub
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Récupérer le code du dépôt sur la machine virtuelle de GitHub
+    - name: Checkout du code
+      uses: actions/checkout@v4
+
+    # 2. Vérifier la présence des fichiers essentiels (Exigence du TP)
+    - name: Vérifier la présence des fichiers
+      run: |
+        test -f index.html || (echo "Erreur: index.html manquant" && exit 1)
+        test -f nginx.conf || (echo "Erreur: nginx.conf manquant" && exit 1)
+        test -f Dockerfile || (echo "Erreur: Dockerfile manquant" && exit 1)
+        echo "Tous les fichiers sont présents."
+
+    # 3. Construire l'image Docker (cela teste indirectement la config Nginx)
+    - name: Build de l'image Docker
+      run: docker build -t mon-nginx-test .
+
+    # 4. Tester la configuration Nginx à l'intérieur du conteneur
+    - name: Tester la configuration Nginx
+      run: docker run --rm mon-nginx-test nginx -t
