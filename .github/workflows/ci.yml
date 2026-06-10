@@ -20,7 +20,7 @@ jobs:
       run: |
         test -f index.html || (echo "Erreur: index.html manquant" && exit 1)
         test -f nginx.conf || (echo "Erreur: nginx.conf manquant" && exit 1)
-        test -f Dockerfile || (echo "Erreur: Dockerfile manquant" && exit 1)
+        test -f dockerfile || (echo "Erreur: Dockerfile manquant" && exit 1)
 
     - name: Build de l'image Docker
       run: docker build -t mon-nginx-test .
